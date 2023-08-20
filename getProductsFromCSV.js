@@ -1,18 +1,17 @@
 const fs = require("fs");
-const csvParser = require("csv-parser");
 
 function getProductsFromCSV() {
 
     const results = [];
 
     try {
-        const csvData = fs.readFileSync('input.csv', 'utf-8');
+        const csvData = fs.readFileSync('input.tsv', 'utf-8');
         const rows = csvData.split('\n');
 
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i].trim();
             if (row) {
-                const columns = row.split(',');
+                const columns = row.split('\t');
 
                 const object = {
                     id: parseInt(columns[0]),
