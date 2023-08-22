@@ -9,16 +9,16 @@ initializeApp({
     credential: cert(serviceAccount)
 });
 
+const db = getFirestore();
+const colRef = db.collection("products").doc("puzzles").collection("items");
+
 async function addProductToFirestore(product) {
-    const boardgameDocRef = boardgamesColRef.doc(`${product.id}`);
-    await boardgameDocRef.set(product);
+    const docRef = colRef.doc(`${product.id}`);
+    await docRef.set(product);
 }
 
-const db = getFirestore();
-const boardgamesColRef = db.collection("products").doc("boardgames").collection("items");
-
-const getProductsFromCSV = require("./getProductsFromCSV");
-const products = getProductsFromCSV();
+const getProductsFromTSV = require("./getProductsFromTSV");
+const products = getProductsFromTSV();
 
 products.forEach((product) => {
     addProductToFirestore(product).then(() => {
